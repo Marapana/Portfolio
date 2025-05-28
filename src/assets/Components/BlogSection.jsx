@@ -43,10 +43,7 @@ const BlogSection = () => {
             <p className="text-secondary">
               Explore a selection of my latest UI/UX and front-end work—crafted to blend thoughtful design with seamless user experience.
             </p>
-          </div>
-          <div>
-            <Button variant="danger" className="mt-3 mt-md-0">View all</Button>
-          </div>
+          </div>          
         </div>
 
         <Row xs={1} sm={2} md={2} lg={4} className="g-4">
