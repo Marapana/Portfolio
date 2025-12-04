@@ -1,0 +1,27 @@
+.social-icons a {
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.3s ease, color 0.3s ease;
+  font-size: 1.25rem;
+}
+
+.social-icons a:hover {
+  transform: scale(1.5);
+}
+
+/* Specific brand colors */
+.social-icons a.email:hover {
+  color: #d93025; /* Gmail red */
+}
+
+.social-icons a.linkedin:hover {
+  color: #0077b5;
+}
+
+.social-icons a.behance:hover {
+  color: #1769ff;
+}
+
+.social-icons a.dribbble:hover {
+  color: #ea4c89;
+}

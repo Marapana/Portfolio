@@ -1,11 +1,7 @@
 import React from 'react';
 import { Container, Navbar, Nav, Row, Col } from 'react-bootstrap';
-import EmailIcon from '@mui/icons-material/Email';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import BrushIcon from '@mui/icons-material/Brush';
-import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
 import { Link, useLocation } from 'react-router-dom';
-
+import './../Css/Navbar.css';
 
 const PortfolioNavbar = () => {
   const location = useLocation();
@@ -18,11 +14,39 @@ const PortfolioNavbar = () => {
         {/* Mobile Layout */}
         <div className="d-flex d-lg-none flex-column align-items-center w-100">
           {/* Social Icons */}
-          <div className="d-flex justify-content-center mb-3 gap-3">
-            <a href="mailto:youremail@example.com" target="_blank" rel="noopener noreferrer"><EmailIcon /></a>
-            <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer"><LinkedInIcon /></a>
-            <a href="https://www.behance.net/yourprofile" target="_blank" rel="noopener noreferrer"><BrushIcon /></a>
-            <a href="https://dribbble.com/yourprofile" target="_blank" rel="noopener noreferrer"><SportsBasketballIcon /></a>
+          <div className="d-flex gap-3 social-icons">
+            <a
+              href="mailto:youremail@example.com"
+              className="email"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fas fa-envelope"></i>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/yourprofile"
+              className="linkedin"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fab fa-linkedin"></i>
+            </a>
+            <a
+              href="https://www.behance.net/yourprofile"
+              className="behance"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fab fa-behance"></i>
+            </a>
+            <a
+              href="https://dribbble.com/yourprofile"
+              className="dribbble"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fab fa-dribbble"></i>
+            </a>
           </div>
 
           {/* Name & Avatar */}
@@ -41,7 +65,7 @@ const PortfolioNavbar = () => {
           {/* Availability */}
           <div className="d-flex align-items-center mb-3">
             <span className="blinking-dot me-2"></span>
-            <small className="text-muted">Available to work</small>
+            <small className="text-muted">Available for work</small>
           </div>
 
           {/* Nav Links in Same Row */}
@@ -72,7 +96,7 @@ const PortfolioNavbar = () => {
             <span className="fw-bold me-3">Tharindu Marapana</span>
             <div className="d-flex align-items-center">
               <span className="blinking-dot me-2"></span>
-              <small className="text-muted">Available to work</small>
+              <small className="text-muted">Available for work</small>
             </div>
           </div>
 
@@ -87,11 +111,39 @@ const PortfolioNavbar = () => {
           </Nav>
 
           {/* Right: Social Icons */}
-          <div className="d-flex gap-3">
-            <a href="mailto:youremail@example.com" target="_blank" rel="noopener noreferrer"><EmailIcon /></a>
-            <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer"><LinkedInIcon /></a>
-            <a href="https://www.behance.net/yourprofile" target="_blank" rel="noopener noreferrer"><BrushIcon /></a>
-            <a href="https://dribbble.com/yourprofile" target="_blank" rel="noopener noreferrer"><SportsBasketballIcon /></a>
+          <div className="d-flex gap-3 social-icons">
+            <a
+              href="mailto:youremail@example.com"
+              className="email"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fas fa-envelope"></i>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/yourprofile"
+              className="linkedin"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fab fa-linkedin"></i>
+            </a>
+            <a
+              href="https://www.behance.net/yourprofile"
+              className="behance"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fab fa-behance"></i>
+            </a>
+            <a
+              href="https://dribbble.com/yourprofile"
+              className="dribbble"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fab fa-dribbble"></i>
+            </a>
           </div>
         </div>
 
