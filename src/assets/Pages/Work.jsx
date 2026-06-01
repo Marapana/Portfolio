@@ -1,34 +1,20 @@
 import React from 'react';
-import { Container, Button } from 'react-bootstrap';
-import Blogs from './../Components/BlogSection';
+import HeroSection from '../Components/sections/HeroSection.jsx';
+import SkillsMarquee from '../Components/sections/SkillsMarquee.jsx';
+import AboutSection from '../Components/sections/AboutSection.jsx';
+import ProjectsSection from '../Components/sections/ProjectsSection.jsx';
+import ProcessSection from '../Components/sections/ProcessSection.jsx';
+import ContactSection from '../Components/sections/ContactSection.jsx';
+
 const Work = () => {
   return (
-    <div style={{ backgroundColor: '#f7f8fa', padding: '6rem 0' }}>
-      <Container className="text-center">
-        <p className="text-muted" style={{ letterSpacing: '1px' }}>
-          UI/UX Engineer specializing in UX Research, Human-AI Interaction, and Prompt UX —
-        </p>
-
-        <h1 className="fw-bold mb-4" style={{ fontSize: '2.5rem', lineHeight: '1.3' }}>
-          Designing digital experiences with <br /> purpose and personality
-        </h1>
-
-        <p className="text-secondary mb-5" style={{ maxWidth: '600px', margin: '0 auto' }}>
-          I blend creativity and code to craft intuitive, accessible interfaces.
-          Explore my work and see how thoughtful design can make a difference.
-        </p>
-
-        <Button variant="light" size="lg" style={{
-          backgroundColor: '#e1e1e1',
-          border: 'none',
-          borderRadius: '10px',
-          padding: '0.8rem 2rem',
-        }}>
-          View projects
-        </Button>
-      </Container>
-
-      <Blogs />
+    <div className="portfolio-page">
+      <HeroSection />
+      <SkillsMarquee />
+      <AboutSection />
+      <ProjectsSection />
+      <ProcessSection />
+      <ContactSection />
     </div>
   );
 };

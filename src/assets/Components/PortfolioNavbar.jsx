@@ -1,170 +1,139 @@
-import React from 'react';
-import { Container, Navbar, Nav, Row, Col } from 'react-bootstrap';
-import { Link, useLocation } from 'react-router-dom';
-import './../Css/Navbar.css';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { navItems } from '../data/portfolioData.js';
 
 const PortfolioNavbar = () => {
-  const location = useLocation();
-  const isActive = (path) => location.pathname === path;
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('#home');
+
+  useEffect(() => {
+    const closeMenu = () => setMenuOpen(false);
+    window.addEventListener('resize', closeMenu);
+
+    return () => window.removeEventListener('resize', closeMenu);
+  }, []);
+
+  useEffect(() => {
+    const sectionIds = navItems.map((item) => item.href);
+    const sections = sectionIds
+      .map((href) => document.querySelector(href))
+      .filter(Boolean);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntry = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0];
+
+        if (visibleEntry?.target?.id) {
+          setActiveSection(`#${visibleEntry.target.id}`);
+        }
+      },
+      {
+        rootMargin: '-25% 0px -55% 0px',
+        threshold: [0.2, 0.45, 0.7],
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, []);
+
+  const socialItems = useMemo(
+    () => [
+      {
+        href: '#contact',
+        label: 'Email',
+        iconClass: 'fas fa-envelope',
+      },
+      {
+        href: 'https://www.linkedin.com/in/marapana/',
+        label: 'LinkedIn',
+        iconClass: 'fab fa-linkedin-in',
+      },
+      {
+        href: 'https://www.behance.net/marapana',
+        label: 'Behance',
+        iconClass: 'fab fa-behance',
+      },
+      {
+        href: 'https://dribbble.com/Marapana',
+        label: 'Dribbble',
+        iconClass: 'fab fa-dribbble',
+      },
+    ],
+    []
+  );
 
   return (
-    <Navbar bg="light" expand="lg" className="py-3 px-4">
-      <Container fluid>
-
-        {/* Mobile Layout */}
-        <div className="d-flex d-lg-none flex-column align-items-center w-100">
-          {/* Social Icons */}
-          <div className="d-flex gap-3 social-icons">
-            <a
-              href="mailto:youremail@example.com"
-              className="email"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i className="fas fa-envelope"></i>
-            </a>
-            <a
-              href="https://www.linkedin.com/in/yourprofile"
-              className="linkedin"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i className="fab fa-linkedin"></i>
-            </a>
-            <a
-              href="https://www.behance.net/yourprofile"
-              className="behance"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i className="fab fa-behance"></i>
-            </a>
-            <a
-              href="https://dribbble.com/yourprofile"
-              className="dribbble"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i className="fab fa-dribbble"></i>
-            </a>
-          </div>
-
-          {/* Name & Avatar */}
-          <div className="d-flex align-items-center mb-2">
-            <img
-              src="/path-to-avatar.png"
-              alt="Avatar"
-              width="40"
-              height="40"
-              className="rounded-circle me-2"
-              style={{ border: '4px solid orange' }}
-            />
-            <span className="fw-bold">Tharindu Marapana</span>
-          </div>
-
-          {/* Availability */}
-          <div className="d-flex align-items-center mb-3">
-            <span className="blinking-dot me-2"></span>
-            <small className="text-muted">Available for work</small>
-          </div>
-
-          {/* Nav Links in Same Row */}
-          <div className="d-flex gap-4 mb-3">
-            <Nav.Link as={Link} to="/" className={`mx-3 ${isActive('/') ? 'fw-bold text-dark' : 'text-muted'}`}>
-              Work
-            </Nav.Link>
-            <Nav.Link as={Link} to="/about" className={`mx-3 ${isActive('/about') ? 'fw-bold text-dark' : 'text-muted'}`}>
-              About
-            </Nav.Link>
-
-
-          </div>
-        </div>
-
-        {/* Desktop Layout */}
-        <div className="d-none d-lg-flex justify-content-between align-items-center w-100">
-          {/* Left: Avatar + Name + Availability */}
-          <div className="d-flex align-items-center">
-            <img
-              src="/path-to-avatar.png"
-              alt="Avatar"
-              width="40"
-              height="40"
-              className="rounded-circle me-2"
-              style={{ border: '4px solid orange' }}
-            />
-            <span className="fw-bold me-3">Tharindu Marapana</span>
-            <div className="d-flex align-items-center">
-              <span className="blinking-dot me-2"></span>
-              <small className="text-muted">Available for work</small>
+    <header className="portfolio-nav">
+      <div className="container">
+        <div className="nav-inner">
+          <a className="brand" href="#home" onClick={() => setMenuOpen(false)}>
+            <span className="avatar" aria-hidden="true">
+              TM
+            </span>
+            <div>
+              <div className="name">Tharindu Marapana</div>
+              <div className="availability" aria-label="Available for design and frontend work">
+                <span className="dot" /> UI/UX Designer and Frontend Engineer
+              </div>
             </div>
+          </a>
+
+          <nav
+            id="primary-navigation"
+            className={`links ${menuOpen ? 'is-open' : ''}`}
+            aria-label="Primary"
+          >
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className={activeSection === item.href ? 'is-active' : ''}
+                onClick={() => setMenuOpen(false)}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+
+          <div className="nav-actions">
+            <div className="social-icons">
+              {socialItems.map((item) => {
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    aria-label={item.label}
+                    target={item.href.startsWith('http') ? '_blank' : undefined}
+                    rel={item.href.startsWith('http') ? 'noreferrer' : undefined}
+                  >
+                    <i className={item.iconClass} aria-hidden="true" />
+                  </a>
+                );
+              })}
+            </div>
+
+            <a href="#contact" className="nav-pill-cta">
+              Let&apos;s Talk
+            </a>
           </div>
 
-          {/* Center Nav Links */}
-          <Nav>
-            <Nav.Link as={Link} to="/" className={`mx-3 ${isActive('/') ? 'fw-bold text-dark' : 'text-muted'}`}>
-              Work
-            </Nav.Link>
-            <Nav.Link as={Link} to="/about" className={`mx-3 ${isActive('/about') ? 'fw-bold text-dark' : 'text-muted'}`}>
-              About
-            </Nav.Link>
-          </Nav>
-
-          {/* Right: Social Icons */}
-          <div className="d-flex gap-3 social-icons">
-            <a
-              href="mailto:youremail@example.com"
-              className="email"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i className="fas fa-envelope"></i>
-            </a>
-            <a
-              href="https://www.linkedin.com/in/yourprofile"
-              className="linkedin"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i className="fab fa-linkedin"></i>
-            </a>
-            <a
-              href="https://www.behance.net/yourprofile"
-              className="behance"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i className="fab fa-behance"></i>
-            </a>
-            <a
-              href="https://dribbble.com/yourprofile"
-              className="dribbble"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i className="fab fa-dribbble"></i>
-            </a>
-          </div>
+          <button
+            type="button"
+            className="menu-toggle"
+            aria-expanded={menuOpen}
+            aria-controls="primary-navigation"
+            aria-label="Toggle navigation"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            {menuOpen ? <XMarkIcon aria-hidden="true" /> : <Bars3Icon aria-hidden="true" />}
+          </button>
         </div>
-
-        {/* Blinking Dot Style */}
-        <style>{`
-          .blinking-dot {
-            width: 10px;
-            height: 10px;
-            background-color: #28a745;
-            border-radius: 50%;
-            display: inline-block;
-            animation: blink 1.2s infinite ease-in-out;
-          }
-
-          @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.1; }
-          }
-        `}</style>
-      </Container>
-    </Navbar>
+      </div>
+    </header>
   );
 };
 

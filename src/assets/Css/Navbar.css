@@ -1,27 +1,234 @@
-.social-icons a {
-  color: inherit;
-  text-decoration: none;
-  transition: transform 0.3s ease, color 0.3s ease;
-  font-size: 1.25rem;
+@property --border-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 225deg;
 }
 
-.social-icons a:hover {
-  transform: scale(1.5);
+.portfolio-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 18px 0 0;
 }
 
-/* Specific brand colors */
-.social-icons a.email:hover {
-  color: #d93025; /* Gmail red */
+.nav-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 12px 40px rgba(16, 24, 40, 0.08);
 }
 
-.social-icons a.linkedin:hover {
-  color: #0077b5;
+.nav-inner::before {
+  content: '';
+  position: absolute;
+  inset: -1.2px;
+  border-radius: inherit;
+  padding: 1.2px;
+  background: conic-gradient(
+    from var(--border-angle, 220deg),
+    transparent 0deg,
+    transparent 318deg,
+    rgba(15, 23, 42, 0.92) 332deg,
+    rgba(20, 184, 166, 0.75) 344deg,
+    transparent 356deg,
+    transparent 360deg
+  );
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: nav-border-travel 5.4s linear infinite;
+  pointer-events: none;
 }
 
-.social-icons a.behance:hover {
-  color: #1769ff;
+@keyframes nav-border-travel {
+  0% {
+    --border-angle: 225deg;
+  }
+
+  100% {
+    --border-angle: 585deg;
+  }
 }
 
-.social-icons a.dribbble:hover {
-  color: #ea4c89;
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.brand .avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #111827, #2f3646);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.brand .name {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.84rem;
+  color: #667085;
+}
+
+.availability .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.12);
+}
+
+.links {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.links a {
+  padding: 12px 16px;
+  border-radius: 999px;
+  font-weight: 600;
+  color: #667085;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.links a:hover,
+.links a.is-active {
+  background: rgba(241, 245, 249, 0.95);
+  color: #111827;
+}
+
+.links a.is-active {
+  box-shadow: inset 0 0 0 1px rgba(17, 24, 39, 0.04);
+}
+
+.nav-actions {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.social-icons a,
+.menu-toggle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(16, 24, 40, 0.08);
+  background: rgba(255, 255, 255, 0.78);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.social-icons a:hover,
+.menu-toggle:hover {
+  transform: scale(1.05);
+  background: #fff;
+  border-color: rgba(16, 24, 40, 0.14);
+}
+
+.social-icons svg,
+.menu-toggle svg {
+  width: 19px;
+  height: 19px;
+}
+
+.social-icons i {
+  font-size: 0.95rem;
+}
+
+.nav-pill-cta {
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #c7f9f1, #99f6e4);
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.menu-toggle {
+  display: none;
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 991px) {
+  .nav-inner {
+    grid-template-columns: 1fr auto;
+    border-radius: 28px;
+  }
+
+  .links {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 12px);
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .links.is-open {
+    display: flex;
+  }
+
+  .links a {
+    padding: 14px 16px;
+  }
+
+  .nav-actions {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 640px) {
+  .brand .name {
+    font-size: 0.95rem;
+  }
+
+  .availability {
+    display: none;
+  }
 }
